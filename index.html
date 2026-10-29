@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>瑞典养老金体系 · Det svenska pensionssystemet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,800&family=Noto+Serif+SC:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f4efe6;
+    --paper-2: #ebe3d4;
+    --ink: #13223a;
+    --ink-soft: #4a5568;
+    --orange: #e8601c;
+    --orange-deep: #b9440c;
+    --orange-pale: #f7c9a8;
+    --blue: #1d4f8c;
+    --yellow: #f2c230;
+    --rule: rgba(19, 34, 58, .18);
+    --serif: "Fraunces", "Noto Serif SC", serif;
+    --serif-cn: "Noto Serif SC", "Fraunces", serif;
+    --sans: "Noto Sans SC", sans-serif;
+    --mono: "JetBrains Mono", monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-weight: 400;
+    line-height: 1.85;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* paper grain */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: .35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.3  0 0 0 0 0.25  0 0 0 0 0.2  0 0 0 .25 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  a { color: var(--orange-deep); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  a:hover { color: var(--orange); }
+
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+
+  /* ───────── masthead ───────── */
+  .masthead {
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+  }
+  .masthead .wrap { display: flex; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+  .masthead span:nth-child(2) { color: var(--orange-deep); }
+
+  /* ───────── hero ───────── */
+  .hero { position: relative; padding: 72px 0 96px; overflow: hidden; }
+  .hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 56px; align-items: center; }
+
+  .kicker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: .2em;
+    color: var(--orange-deep);
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .kicker::before { content: ""; width: 36px; height: 2px; background: var(--orange); }
+
+  h1 {
+    font-family: var(--serif-cn);
+    font-weight: 900;
+    font-size: clamp(56px, 8.5vw, 120px);
+    line-height: 1.02;
+    letter-spacing: -.02em;
+    margin: 22px 0 18px;
+  }
+  h1 em {
+    font-style: normal;
+    color: var(--orange);
+    position: relative;
+  }
+  .hero .sv {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(20px, 2.2vw, 28px);
+    color: var(--ink-soft);
+    font-variation-settings: "opsz" 144;
+  }
+  .hero .lede {
+    margin-top: 28px;
+    max-width: 520px;
+    font-size: 17px;
+    color: var(--ink-soft);
+  }
+
+  /* orange envelope */
+  .envelope-stage { position: relative; height: 420px; perspective: 1200px; }
+  .envelope {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 360px; height: 240px;
+    margin: -120px 0 0 -180px;
+    background: linear-gradient(160deg, #f07a33 0%, var(--orange) 45%, var(--orange-deep) 100%);
+    border-radius: 6px;
+    box-shadow: 0 30px 60px -20px rgba(120, 40, 0, .45), 0 2px 0 rgba(255,255,255,.2) inset;
+    transform: rotate(-7deg);
+    animation: floaty 7s ease-in-out infinite;
+  }
+  .envelope::before {
+    /* flap */
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom right, transparent 49.6%, rgba(0,0,0,.12) 50%, transparent 50.4%),
+                linear-gradient(to bottom left, transparent 49.6%, rgba(0,0,0,.12) 50%, transparent 50.4%);
+    background-size: 50% 62%;
+    background-repeat: no-repeat;
+    background-position: left top, right top;
+  }
+  .envelope .window {
+    position: absolute;
+    left: 28px; bottom: 34px;
+    width: 180px; height: 62px;
+    background: rgba(255, 250, 240, .92);
+    border-radius: 3px;
+    padding: 10px 14px;
+    font-family: var(--mono);
+    font-size: 10px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .envelope .stamp {
+    position: absolute;
+    right: 22px; top: 20px;
+    width: 58px; height: 70px;
+    background: var(--blue);
+    border: 4px dotted var(--paper);
+    outline: 2px solid var(--blue);
+    display: grid; place-items: center;
+  }
+  .envelope .stamp::after {
+    content: "";
+    width: 24px; height: 24px;
+    background:
+      linear-gradient(var(--yellow), var(--yellow)) center / 100% 5px no-repeat,
+      linear-gradient(var(--yellow), var(--yellow)) 35% 0 / 5px 100% no-repeat;
+  }
+  .envelope .label {
+    position: absolute; left: 28px; top: 26px;
+    font-family: var(--serif);
+    font-weight: 800;
+    color: rgba(255,255,255,.95);
+    font-size: 22px;
+    letter-spacing: -.01em;
+  }
+  .envelope .label small {
+    display: block;
+    font-family: var(--mono);
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: .15em;
+    opacity: .8;
+  }
+  .env-back {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 360px; height: 240px;
+    margin: -120px 0 0 -180px;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    transform: rotate(6deg) translate(40px, -30px);
+  }
+  .big-num {
+    position: absolute;
+    right: -10px; bottom: -40px;
+    font-family: var(--serif);
+    font-weight: 800;
+    font-size: 220px;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--orange-pale);
+    z-index: -1;
+    font-variation-settings: "opsz" 144;
+  }
+  @keyframes floaty {
+    0%, 100% { transform: rotate(-7deg) translateY(0); }
+    50% { transform: rotate(-5deg) translateY(-12px); }
+  }
+
+  /* ───────── load stagger ───────── */
+  .rise { opacity: 0; transform: translateY(24px); animation: rise .9s cubic-bezier(.2,.7,.2,1) forwards; }
+  .d1 { animation-delay: .05s; } .d2 { animation-delay: .18s; } .d3 { animation-delay: .32s; }
+  .d4 { animation-delay: .46s; } .d5 { animation-delay: .6s; }
+  @keyframes rise { to { opacity: 1; transform: none; } }
+
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity .9s ease, transform .9s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ───────── toc ───────── */
+  .toc {
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    background: var(--paper);
+    position: sticky; top: 0; z-index: 50;
+  }
+  .toc .wrap { display: flex; gap: 0; overflow-x: auto; }
+  .toc a {
+    flex: 1;
+    min-width: 120px;
+    padding: 14px 16px;
+    font-size: 13px;
+    color: var(--ink);
+    text-decoration: none;
+    border-right: 1px solid var(--rule);
+    white-space: nowrap;
+    transition: background .25s, color .25s;
+  }
+  .toc a:last-child { border-right: none; }
+  .toc a b { font-family: var(--mono); font-weight: 600; color: var(--orange); margin-right: 8px; }
+  .toc a:hover { background: var(--ink); color: var(--paper); }
+
+  /* ───────── sections ───────── */
+  section { padding: 110px 0 40px; }
+  .sec-head {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+    align-items: end;
+    margin-bottom: 56px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 24px;
+  }
+  .sec-no {
+    font-family: var(--serif);
+    font-weight: 800;
+    font-size: 104px;
+    line-height: .8;
+    color: var(--orange);
+    font-variation-settings: "opsz" 144;
+  }
+  h2 {
+    font-family: var(--serif-cn);
+    font-weight: 900;
+    font-size: clamp(32px, 4vw, 52px);
+    line-height: 1.15;
+  }
+  h2 .sv {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 20px;
+    color: var(--ink-soft);
+    margin-top: 6px;
+  }
+  h3 {
+    font-family: var(--serif-cn);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+  h3 .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 3px 8px;
+    vertical-align: middle;
+    margin-left: 10px;
+  }
+  p + p { margin-top: 14px; }
+  .muted { color: var(--ink-soft); }
+
+  ul.dash { list-style: none; }
+  ul.dash li { position: relative; padding-left: 22px; margin: 8px 0; }
+  ul.dash li::before { content: "—"; position: absolute; left: 0; color: var(--orange); font-weight: 700; }
+
+  /* ───────── pyramid ───────── */
+  .stack { display: grid; gap: 10px; max-width: 880px; margin: 0 auto; }
+  .tier {
+    display: grid;
+    grid-template-columns: 70px 1fr auto;
+    align-items: center;
+    gap: 22px;
+    padding: 26px 32px;
+    border: 1.5px solid var(--ink);
+    position: relative;
+    transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s;
+    text-decoration: none;
+    color: inherit;
+  }
+  .tier:hover { transform: translate(-6px, -6px); box-shadow: 6px 6px 0 var(--ink); color: inherit; }
+  .tier .n { font-family: var(--serif); font-weight: 800; font-size: 54px; line-height: 1; }
+  .tier .t { font-family: var(--serif-cn); font-weight: 700; font-size: 22px; }
+  .tier .t small { display: block; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 15px; opacity: .75; }
+  .tier .d { font-size: 14px; text-align: right; max-width: 240px; }
+  .tier.t3 { background: var(--paper-2); }
+  .tier.t2 { background: var(--blue); color: var(--paper); border-color: var(--blue); }
+
+  /* proportional bars: one track = all pension paid out in 2024; each tier fills its own slice */
+  .tier .d b {
+    display: block;
+    font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 40px; line-height: 1;
+    font-variation-settings: "opsz" 144;
+  }
+  .tier .d span { font-family: var(--mono); font-size: 12px; opacity: .8; }
+  .tier .track {
+    grid-column: 1 / -1;
+    position: relative;
+    height: 18px;
+    margin-top: 4px;
+    background: rgba(19, 34, 58, .08);
+    outline: 1px solid rgba(19, 34, 58, .18);
+  }
+  .tier.t1 .track, .tier.t2 .track { background: rgba(255, 255, 255, .14); outline-color: rgba(255, 255, 255, .35); }
+  .tier .fill { position: absolute; top: 0; bottom: 0; display: flex; }
+  .tier.t2 .fill { background: var(--paper); }
+  .tier.t3 .fill { background: var(--ink); }
+  .fill .seg { height: 100%; position: relative; }
+  .fill .seg + .seg { box-shadow: inset 1.5px 0 0 var(--orange); }
+  .seg.s-ink { background: #fff; }
+  .seg.s-til { background: rgba(255, 255, 255, .62); }
+  .seg.s-gar { background: var(--yellow); }
+  .seg.s-pre { background: var(--blue); }
+  .seg.s-ipt { background: rgba(255, 255, 255, .32); }
+  .seg-legend {
+    grid-column: 1 / -1;
+    display: flex; flex-wrap: wrap; gap: 6px 18px;
+    font-size: 13px;
+    margin-top: 2px;
+  }
+  .seg-legend i {
+    display: inline-block; width: 11px; height: 11px; margin-right: 6px;
+    vertical-align: -1px; outline: 1px solid rgba(255, 255, 255, .6);
+  }
+  .seg-legend em { font-style: normal; font-family: var(--mono); font-size: 12px; opacity: .85; margin-left: 4px; }
+  .seg-legend .hl-gar { font-weight: 700; }
+  .stack-note { max-width: 880px; margin: 18px auto 0; font-size: 12.5px; color: var(--ink-soft); line-height: 1.7; }
+  .in .tier .fill { animation: grow 1.2s cubic-bezier(.2,.7,.2,1) both; transform-origin: left; }
+  @keyframes grow { from { transform: scaleX(0); } }
+  .tier.t2:hover { color: var(--paper); }
+  .tier.t1 { background: var(--orange); color: #fff; border-color: var(--orange-deep); }
+  .tier.t1:hover { color: #fff; }
+
+  /* ───────── 18.5 split ───────── */
+  .split-wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: 64px; align-items: start; }
+  .split-bar { margin: 26px 0 14px; display: flex; height: 64px; border: 1.5px solid var(--ink); }
+  .split-bar div {
+    display: flex; align-items: center; padding: 0 14px;
+    font-family: var(--mono); font-weight: 600; font-size: 14px;
+    transform-origin: left; transform: scaleX(0);
+    transition: transform 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  .in .split-bar div { transform: scaleX(1); }
+  .split-bar .a { flex: 16; background: var(--orange); color: #fff; }
+  .split-bar .b { flex: 2.5; background: var(--blue); color: #fff; justify-content: center; padding: 0; transition-delay: .3s; }
+  .split-legend { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-soft); }
+  .huge {
+    font-family: var(--serif);
+    font-weight: 800;
+    font-size: clamp(100px, 13vw, 168px);
+    line-height: .9;
+    letter-spacing: -.04em;
+    font-variation-settings: "opsz" 144;
+  }
+  .huge sup { font-size: .35em; vertical-align: top; position: relative; top: .3em; color: var(--orange); }
+
+  .who { display: grid; grid-template-columns: 1fr 1fr; gap: 0; margin-top: 30px; border: 1px solid var(--rule); }
+  .who div { padding: 18px 20px; }
+  .who div + div { border-left: 1px solid var(--rule); }
+  .who b { display: block; font-family: var(--serif); font-size: 36px; font-weight: 800; line-height: 1.1; }
+  .who span { font-size: 13px; color: var(--ink-soft); }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-top: 72px; border-top: 1.5px solid var(--ink); }
+  .card { padding: 32px 28px 36px; border-right: 1px solid var(--rule); position: relative; }
+  .card:last-child { border-right: none; }
+  .card .pct {
+    font-family: var(--serif); font-weight: 800; font-size: 46px; line-height: 1;
+    margin-bottom: 18px; color: var(--orange);
+  }
+  .card .pct.blue { color: var(--blue); }
+  .card .pct.ink { color: var(--ink); font-size: 30px; padding-top: 12px; padding-bottom: 4px; }
+  .card h3 small { display: block; font-family: var(--serif); font-style: italic; font-weight: 300; font-size: 15px; color: var(--ink-soft); }
+
+  .note {
+    margin-top: 40px;
+    padding: 22px 26px;
+    background: var(--paper-2);
+    border-left: 4px solid var(--orange);
+    font-size: 15px;
+  }
+
+  /* ───────── tables ───────── */
+  table { width: 100%; border-collapse: collapse; font-size: 15px; }
+  th {
+    text-align: left;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: 12px 14px;
+    border-bottom: 1.5px solid var(--ink);
+    color: var(--ink-soft);
+  }
+  td { padding: 18px 14px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  td:first-child { font-family: var(--serif); font-weight: 800; font-size: 18px; white-space: nowrap; }
+  tr { transition: background .2s; }
+  tbody tr:hover { background: rgba(232, 96, 28, .07); }
+  .hl { color: var(--orange-deep); font-weight: 600; }
+
+  /* age timeline */
+  .timeline { position: relative; margin: 50px 0 20px; padding: 70px 0 10px; }
+  .timeline .line { position: absolute; left: 0; right: 0; top: 96px; height: 2px; background: var(--ink); }
+  .timeline .pts { display: grid; grid-template-columns: repeat(6, 1fr); position: relative; }
+  .pt { text-align: center; position: relative; }
+  .pt .age { font-family: var(--serif); font-weight: 800; font-size: 34px; line-height: 1; position: absolute; top: -66px; left: 0; right: 0; }
+  .pt .dot { width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 2px solid var(--ink); margin: 19px auto 14px; }
+  .pt.key .dot { background: var(--orange); border-color: var(--orange); transform: scale(1.5); }
+  .pt.key .age { color: var(--orange); }
+  .pt .lbl { font-size: 13px; color: var(--ink-soft); padding: 0 6px; line-height: 1.5; }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+
+  /* tax */
+  .tax-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1.5px solid var(--ink); }
+  .tax-grid > div { padding: 36px; }
+  .tax-grid > div + div { border-left: 1.5px solid var(--ink); background: var(--ink); color: var(--paper); }
+  .tax-grid .k { font-family: var(--mono); font-size: 11px; letter-spacing: .15em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+
+  /* tools */
+  .tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .tool {
+    border: 1.5px solid var(--ink);
+    padding: 28px;
+    position: relative;
+    background: var(--paper);
+    transition: transform .3s, box-shadow .3s;
+  }
+  .tool:hover { transform: translate(-4px, -4px); box-shadow: 4px 4px 0 var(--orange); }
+  .tool .ic {
+    width: 44px; height: 44px; margin-bottom: 18px;
+    display: grid; place-items: center;
+    font-family: var(--serif); font-weight: 800; font-size: 22px;
+  }
+  .tool:nth-child(1) .ic { background: var(--orange); color: #fff; }
+  .tool:nth-child(2) .ic { background: var(--blue); color: #fff; }
+  .tool:nth-child(3) .ic { background: var(--yellow); color: var(--ink); }
+
+  /* expat */
+  .expat { background: var(--ink); color: var(--paper); padding: 110px 0 100px; margin-top: 110px; position: relative; overflow: hidden; }
+  .expat .sec-head { border-bottom-color: rgba(244, 239, 230, .2); }
+  .expat h2 .sv { color: rgba(244, 239, 230, .6); }
+  .expat-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; }
+  .ex { padding: 34px 34px 34px 0; border-top: 1px solid rgba(244, 239, 230, .2); display: grid; grid-template-columns: 56px 1fr; gap: 16px; }
+  .ex:nth-child(even) { padding-left: 34px; border-left: 1px solid rgba(244, 239, 230, .2); }
+  .ex .mark { font-family: var(--serif); font-weight: 800; font-size: 40px; line-height: 1; }
+  .ex .mark.ok { color: var(--yellow); }
+  .ex .mark.no { color: var(--orange); }
+  .ex p { color: rgba(244, 239, 230, .78); font-size: 15px; }
+  .ex h3 { color: var(--paper); font-size: 20px; }
+  .expat .flag {
+    position: absolute; right: -60px; top: 40px;
+    width: 340px; height: 220px; opacity: .08;
+    background:
+      linear-gradient(var(--yellow), var(--yellow)) 0 50% / 100% 22% no-repeat,
+      linear-gradient(var(--yellow), var(--yellow)) 33% 0 / 22% 100% no-repeat,
+      var(--blue);
+    transform: rotate(8deg);
+  }
+
+  footer { padding: 48px 0 60px; font-size: 13px; color: var(--ink-soft); border-top: 1px solid var(--ink); }
+  footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+  footer .mono { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; }
+
+  /* ───────── responsive ───────── */
+  @media (max-width: 900px) {
+    .hero .wrap, .split-wrap, .two, .tax-grid, .expat-list { grid-template-columns: 1fr; }
+    .envelope-stage { height: 300px; }
+    .envelope, .env-back { transform-origin: center; scale: .78; }
+    .big-num { font-size: 150px; }
+    .cards, .tools { grid-template-columns: 1fr; }
+    .card { border-right: none; border-bottom: 1px solid var(--rule); }
+    .tier.t3, .tier.t2 { margin: 0; }
+    .tier { grid-template-columns: 50px 1fr; }
+    .tier .d { grid-column: 1 / -1; text-align: left; max-width: none; }
+    .sec-head { grid-template-columns: 1fr; }
+    .sec-no { font-size: 72px; }
+    .tax-grid > div + div { border-left: none; border-top: 1.5px solid var(--ink); }
+    .ex:nth-child(even) { padding-left: 0; border-left: none; }
+    .timeline .pts { grid-template-columns: repeat(3, 1fr); row-gap: 90px; }
+    .timeline .line { display: none; }
+    table { font-size: 14px; }
+    td:first-child { white-space: normal; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .rise, .reveal { opacity: 1; transform: none; }
+    .split-bar div { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="wrap">
+    <span>Pension · Sverige</span>
+    <span>orange kuvertet</span>
+    <span>2026</span>
+  </div>
+</div>
+
+<!-- ═════════ HERO ═════════ -->
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <div class="kicker rise d1">一份关于退休收入的指南</div>
+      <h1 class="rise d2">瑞典<br><em>养老金</em>体系</h1>
+      <div class="sv rise d3">Det svenska pensionssystemet</div>
+      <p class="lede rise d4">
+        瑞典的养老金分为<strong>三层</strong>：国家养老金、职业养老金和私人储蓄。大多数人退休后的收入就是这三部分加起来。
+        下面从缴费、领取、税务讲到外籍居民需要注意的地方。
+      </p>
+    </div>
+    <div class="envelope-stage rise d5" aria-hidden="true">
+      <div class="big-num">18.5</div>
+      <div class="env-back"></div>
+      <div class="envelope">
+        <div class="label"><small>PENSIONSMYNDIGHETEN</small>Din pension</div>
+        <div class="stamp"></div>
+        <div class="window">
+          Allmän pension 2026<br>
+          Inkomstpension ··· 16%<br>
+          Premiepension ··· 2.5%
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="toc">
+  <div class="wrap">
+    <a href="#overview"><b>00</b>三层结构</a>
+    <a href="#figure"><b>图</b>互动图解</a>
+    <a href="#allman"><b>01</b>国家养老金</a>
+    <a href="#tjanste"><b>02</b>职业养老金</a>
+    <a href="#privat"><b>03</b>私人储蓄</a>
+    <a href="#skatt"><b>04</b>税务</a>
+    <a href="#tools"><b>05</b>实用工具</a>
+    <a href="#expat"><b>06</b>外籍居民</a>
+  </div>
+</nav>
+
+<!-- ═════════ OVERVIEW ═════════ -->
+<section id="overview">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">00</div>
+      <h2>三层结构<span class="sv">Tre delar av pensionen</span></h2>
+    </div>
+    <div class="stack reveal">
+      <a href="#privat" class="tier t3">
+        <div class="n">3</div>
+        <div class="t">私人储蓄<small>Privat sparande · 自愿参加</small></div>
+        <div class="d"><b>4.6%</b><span>约 300 亿 kr</span></div>
+        <div class="track" aria-hidden="true"><div class="fill" style="left:95.4%;width:4.6%"></div></div>
+      </a>
+      <a href="#tjanste" class="tier t2">
+        <div class="n">2</div>
+        <div class="t">职业养老金<small>Tjänstepension · 雇主缴纳</small></div>
+        <div class="d"><b>29.1%</b><span>约 1 890 亿 kr</span></div>
+        <div class="track" aria-hidden="true"><div class="fill" style="left:66.3%;width:29.1%"></div></div>
+      </a>
+      <a href="#allman" class="tier t1">
+        <div class="n">1</div>
+        <div class="t">国家养老金<small>Allmän pension · 法定</small></div>
+        <div class="d"><b>66.3%</b><span>约 4 303 亿 kr</span></div>
+        <div class="track" aria-hidden="true">
+          <div class="fill" style="left:0;width:66.3%">
+            <div class="seg s-ink" style="flex:232978"></div>
+            <div class="seg s-til" style="flex:130713"></div>
+            <div class="seg s-gar" style="flex:33255"></div>
+            <div class="seg s-pre" style="flex:27348"></div>
+            <div class="seg s-ipt" style="flex:5960"></div>
+          </div>
+        </div>
+        <div class="seg-legend">
+          <span><i style="background:#fff"></i>收入养老金<em>35.9%</em></span>
+          <span><i style="background:rgba(255,255,255,.62)"></i>补充养老金（旧制度）<em>20.1%</em></span>
+          <span class="hl-gar"><i style="background:var(--yellow)"></i>保障养老金<em>5.1%</em></span>
+          <span><i style="background:var(--blue)"></i>积累养老金<em>4.2%</em></span>
+          <span><i style="background:rgba(255,255,255,.32)"></i>收入养老金补贴<em>0.9%</em></span>
+        </div>
+      </a>
+    </div>
+    <p class="stack-note reveal">
+      比例按 <strong>2024 年瑞典实际发放的养老金总额</strong>（约 6 490 亿 kr）计算，三条进度条首尾相接，加起来是 100%。
+      国家养老金各部分来自 Pensionsmyndigheten《Årsredovisning 2024》表 19，其中保障养老金含 särskilt pensionstillägg；
+      职业养老金和私人养老金来自《Sveriges pensioner 2006–2024》表 1，私人部分只统计可抵税的私人养老金（如 IPS），不含 ISK 等一般储蓄。
+      补充养老金（tilläggspension）是 1953 年及以前出生者的旧制度部分，正在逐年减少；收入养老金补贴（inkomstpensionstillägg）是 2021 年起对低收入养老金的小额补贴。
+      这是全国汇总，不代表个人：中高收入者一般拿不到保障养老金，职业养老金占比也会更高。
+    </p>
+  </div>
+</section>
+
+<!-- ═════════ FIGURE ═════════ -->
+<section id="figure">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">图</div>
+      <h2>你的月薪流向哪里<span class="sv">Interaktiv modell</span></h2>
+    </div>
+    <p class="reveal muted" style="max-width:760px;margin-bottom:40px">
+      拖动月薪，看每个月有多少钱进入国家养老金和职业养老金（ITP1）。
+      关键在右图的拐点：月薪超过约 <strong>56 000 kr</strong> 后，国家养老金不再增加，而 ITP1 改按 <strong>30%</strong> 缴，开始快速上升。
+    </p>
+
+    <div class="pf" id="pf">
+      <!-- left: control + breakdown -->
+      <div class="pf-left">
+        <label class="pf-label" for="pf-range">月薪（税前）</label>
+        <div class="pf-salary"><output id="pf-salary">45 000</output><span>kr / 月</span></div>
+        <input class="pf-range" id="pf-range" type="range" min="0" max="100000" step="500" value="45000" aria-describedby="pf-total">
+        <div class="pf-scale"><span>0</span><span>25k</span><span>50k</span><span>75k</span><span>100k</span></div>
+        <div class="pf-chips" role="group" aria-label="常见月薪">
+          <button type="button" data-s="25000">25 000</button>
+          <button type="button" data-s="40000">40 000</button>
+          <button type="button" data-s="56000">56 000 · 上限</button>
+          <button type="button" data-s="80000">80 000</button>
+        </div>
+
+        <ul class="pf-rows">
+          <li class="r-ink">
+            <div class="pf-row-head"><span><i></i>收入养老金 <small>16%</small></span><b id="v-ink">0</b></div>
+            <div class="pf-track"><div class="pf-bar" id="b-ink"></div></div>
+          </li>
+          <li class="r-pre">
+            <div class="pf-row-head"><span><i></i>积累养老金 <small>2.5%</small></span><b id="v-pre">0</b></div>
+            <div class="pf-track"><div class="pf-bar" id="b-pre"></div></div>
+          </li>
+          <li class="r-itp">
+            <div class="pf-row-head"><span><i></i>职业养老金 ITP1 <small id="itp-rate">4.5%</small></span><b id="v-itp">0</b></div>
+            <div class="pf-track"><div class="pf-bar" id="b-itp"></div></div>
+          </li>
+        </ul>
+
+        <div class="pf-total" id="pf-total" aria-live="polite">
+          <div><span>每月合计</span><b id="v-tot">0</b><em>kr</em></div>
+          <div><span>占月薪</span><b id="v-pct">0</b><em>%</em></div>
+        </div>
+      </div>
+
+      <!-- right: the curve -->
+      <figure class="pf-chart">
+        <figcaption>每月缴费 <span>kr</span></figcaption>
+        <svg id="pf-svg" viewBox="0 0 560 380" role="img" aria-label="每月养老金缴费随月薪变化：国家养老金在约 56 000 kr 后封顶，ITP1 在 52 125 kr 后按 30% 增长">
+          <g id="pf-grid"></g>
+          <g id="pf-th"></g>
+          <path id="pf-l-state" class="ln ln-state"/>
+          <path id="pf-l-itp" class="ln ln-itp"/>
+          <g id="pf-cursor">
+            <line id="pf-cx" class="cur-line"/>
+            <circle id="pf-d-state" r="6" class="dot dot-state"/>
+            <circle id="pf-d-itp" r="6" class="dot dot-itp"/>
+          </g>
+          <text id="pf-end-state" class="end end-state">国家养老金</text>
+          <text id="pf-end-itp" class="end end-itp">ITP1</text>
+          <rect id="pf-hit" fill="transparent"/>
+        </svg>
+        <div class="pf-legend">
+          <span class="lg-state"><i></i>国家养老金（16% + 2.5%）</span>
+          <span class="lg-itp"><i></i>职业养老金 ITP1</span>
+        </div>
+      </figure>
+    </div>
+
+    <p class="pf-note">
+      计算方式：国家养老金 = (月薪 − 7% 养老金费) × 18.5%，养老金收入上限为 7.5 个收入基数（2026 年收入基数按 83 400 kr 计，折合月薪约 56 048 kr）。
+      ITP1：月薪 52 125 kr（7.5 IBB/12）以下部分按 4.5%，以上部分按 30%，由雇主另外缴纳。其他集体协议（SAF-LO、AKAP-KR、PA16 等）规则不同，图中未列出。
+    </p>
+  </div>
+</section>
+
+<style>
+  .pf {
+    display: grid;
+    grid-template-columns: minmax(300px, 0.9fr) 1.1fr;
+    border: 1.5px solid var(--ink);
+    background: #fbf8f2;
+    box-shadow: 8px 8px 0 var(--ink);
+  }
+  .pf-left { padding: 36px 34px 32px; border-right: 1.5px solid var(--ink); }
+  .pf-label { font-family: var(--mono); font-size: 11px; letter-spacing: .16em; color: var(--ink-soft); text-transform: uppercase; }
+  .pf-salary { display: flex; align-items: baseline; gap: 10px; margin: 4px 0 14px; }
+  .pf-salary output {
+    font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 64px; line-height: 1;
+    letter-spacing: -.03em; font-variant-numeric: tabular-nums; font-variation-settings: "opsz" 144;
+  }
+  .pf-salary span { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+
+  /* range */
+  .pf-range { -webkit-appearance: none; appearance: none; width: 100%; height: 28px; background: transparent; cursor: pointer; margin: 0; }
+  .pf-range:focus { outline: none; }
+  .pf-range::-webkit-slider-runnable-track {
+    height: 6px;
+    background: linear-gradient(to right, var(--orange) 0 var(--p, 45%), rgba(19,34,58,.14) var(--p, 45%) 100%);
+  }
+  .pf-range::-moz-range-track { height: 6px; background: rgba(19,34,58,.14); }
+  .pf-range::-moz-range-progress { height: 6px; background: var(--orange); }
+  .pf-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 26px; height: 26px; margin-top: -10px;
+    background: var(--paper); border: 2px solid var(--ink); border-radius: 50%;
+    box-shadow: 2px 2px 0 var(--ink); transition: transform .15s;
+  }
+  .pf-range::-moz-range-thumb { width: 22px; height: 22px; background: var(--paper); border: 2px solid var(--ink); border-radius: 50%; box-shadow: 2px 2px 0 var(--ink); }
+  .pf-range:active::-webkit-slider-thumb { transform: scale(1.12); }
+  .pf-range:focus-visible::-webkit-slider-thumb { outline: 3px solid var(--orange-pale); outline-offset: 2px; }
+  .pf-scale { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft); margin-top: 2px; }
+
+  .pf-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 18px 0 30px; }
+  .pf-chips button {
+    font-family: var(--mono); font-size: 12px; padding: 6px 11px;
+    background: transparent; color: var(--ink); border: 1px solid var(--rule); cursor: pointer;
+    transition: background .2s, color .2s, border-color .2s;
+  }
+  .pf-chips button:hover { border-color: var(--ink); }
+  .pf-chips button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .pf-rows { list-style: none; display: grid; gap: 18px; }
+  .pf-row-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 14.5px; margin-bottom: 6px; }
+  .pf-row-head i { display: inline-block; width: 10px; height: 10px; margin-right: 8px; vertical-align: 0; }
+  .pf-row-head small { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin-left: 4px; }
+  .pf-row-head b { font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 22px; font-variant-numeric: tabular-nums; }
+  .pf-row-head b::after { content: " kr"; font-family: var(--mono); font-weight: 400; font-size: 11px; color: var(--ink-soft); }
+  .pf-track { height: 10px; background: rgba(19,34,58,.07); }
+  .pf-bar { height: 100%; width: 0; transition: width .45s cubic-bezier(.2,.7,.2,1); }
+  .r-ink i, .r-ink .pf-bar { background: var(--orange); }
+  .r-pre i, .r-pre .pf-bar { background: var(--orange-pale); }
+  .r-itp i, .r-itp .pf-bar { background: var(--blue); }
+  #itp-rate.hot { color: var(--blue); font-weight: 600; }
+
+  .pf-total { display: grid; grid-template-columns: 1.4fr 1fr; margin-top: 30px; border-top: 1.5px solid var(--ink); }
+  .pf-total > div { padding-top: 14px; }
+  .pf-total > div + div { border-left: 1px solid var(--rule); padding-left: 18px; }
+  .pf-total span { display: block; font-size: 12px; color: var(--ink-soft); }
+  .pf-total b { font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 40px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .pf-total em { font-style: normal; font-family: var(--mono); font-size: 12px; color: var(--ink-soft); margin-left: 4px; }
+
+  /* chart */
+  .pf-chart { padding: 26px 26px 20px; display: flex; flex-direction: column; justify-content: center; }
+  .pf-chart figcaption { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-soft); }
+  .pf-chart svg { width: 100%; height: auto; display: block; margin-top: 6px; touch-action: none; cursor: crosshair; }
+  .pf-chart .grid line { stroke: rgba(19,34,58,.09); }
+  .pf-chart .axis line { stroke: var(--ink); stroke-width: 1.2; }
+  .pf-chart .tick { font-family: var(--mono); font-size: 10.5px; fill: var(--ink-soft); }
+  .pf-chart .th line { stroke: var(--ink); stroke-dasharray: 3 4; stroke-width: 1; opacity: .55; }
+  .pf-chart .th rect { fill: #fbf8f2; }
+  .pf-chart .th text { font-size: 11.5px; fill: var(--ink); }
+  .pf-chart .th text.sub { font-family: var(--mono); font-size: 10px; fill: var(--ink-soft); }
+  .pf-chart .ln { fill: none; stroke-width: 3.2; stroke-linejoin: round; stroke-linecap: round; }
+  .pf-chart .ln-state { stroke: var(--orange); }
+  .pf-chart .ln-itp { stroke: var(--blue); }
+  .pf-chart .cur-line { stroke: var(--ink); stroke-width: 1.2; }
+  .pf-chart .dot { stroke: #fbf8f2; stroke-width: 3; }
+  .pf-chart .dot-state { fill: var(--orange); }
+  .pf-chart .dot-itp { fill: var(--blue); }
+  .pf-chart .end { font-size: 12.5px; font-weight: 500; }
+  .pf-chart .end-state { fill: var(--orange-deep); }
+  .pf-chart .end-itp { fill: var(--blue); }
+  .pf-legend { display: flex; gap: 22px; flex-wrap: wrap; font-size: 13px; margin-top: 10px; color: var(--ink-soft); }
+  .pf-legend i { display: inline-block; width: 18px; height: 3px; vertical-align: 4px; margin-right: 8px; }
+  .lg-state i { background: var(--orange); }
+  .lg-itp i { background: var(--blue); }
+
+  .pf-note { max-width: 880px; margin-top: 30px; font-size: 12.5px; color: var(--ink-soft); line-height: 1.75; }
+
+  @media (max-width: 900px) {
+    .pf { grid-template-columns: 1fr; box-shadow: 5px 5px 0 var(--ink); }
+    .pf-left { border-right: none; border-bottom: 1.5px solid var(--ink); padding: 26px 22px; }
+    .pf-salary output { font-size: 52px; }
+    .pf-chart { padding: 20px 14px 16px; }
+  }
+</style>
+
+<script>
+(() => {
+  const IBB = 83400, CAP = IBB * 7.5 / 12, FEE = 0.07, MAX = 100000, YMAX = 18000;
+  const pgi = (s) => Math.min(s * (1 - FEE), CAP);
+  const calc = (s) => {
+    const ink = 0.16 * pgi(s), pre = 0.025 * pgi(s);
+    const itp = 0.045 * Math.min(s, CAP) + 0.30 * Math.max(0, s - CAP);
+    return { ink, pre, state: ink + pre, itp };
+  };
+  const CEIL = CAP / (1 - FEE);
+  const fmt = (n) => Math.round(n).toLocaleString("sv-SE").replace(/ /g, " ");
+  const $ = (id) => document.getElementById(id);
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent, text) => {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    parent.appendChild(n);
+    return n;
+  };
+
+  // chart frame
+  const W = 560, H = 380, L = 54, R = 70, T = 52, B = 34;
+  const X = (s) => L + (s / MAX) * (W - L - R);
+  const Y = (v) => H - B - (v / YMAX) * (H - T - B);
+  const grid = $("pf-grid");
+  const gG = el("g", { class: "grid" }, grid), gA = el("g", { class: "axis" }, grid);
+  for (let v = 0; v <= YMAX; v += 3000) {
+    el("line", { x1: L, x2: W - R, y1: Y(v), y2: Y(v) }, gG);
+    el("text", { x: L - 8, y: Y(v) + 3.5, "text-anchor": "end", class: "tick" }, grid, v ? fmt(v) : "0");
+  }
+  for (let s = 0; s <= MAX; s += 25000) {
+    el("text", { x: X(s), y: H - B + 18, "text-anchor": "middle", class: "tick" }, grid, s ? s / 1000 + "k" : "0");
+  }
+  el("line", { x1: L, x2: W - R, y1: Y(0), y2: Y(0) }, gA);
+  el("text", { x: W - R, y: H - 4, "text-anchor": "end", class: "tick" }, grid, "月薪 kr");
+
+  // thresholds: the ITP1 break and the state ceiling, labels stacked so they never collide
+  const th = $("pf-th");
+  [[CAP, "ITP1 改按 30%", fmt(CAP) + " kr", T - 34], [CEIL, "国家养老金封顶", fmt(CEIL) + " kr", T - 6]].forEach(([s, a, b, y]) => {
+    const g = el("g", { class: "th" }, th);
+    el("line", { x1: X(s), x2: X(s), y1: y + 22, y2: Y(0) }, g);
+    const anchorRight = s === CAP;
+    const tx = anchorRight ? X(s) - 6 : X(s) + 6, ta = anchorRight ? "end" : "start";
+    el("text", { x: tx, y: y + 6, "text-anchor": ta }, g, a);
+    el("text", { x: tx, y: y + 19, "text-anchor": ta, class: "sub" }, g, b);
+  });
+
+  // curves
+  const path = (key) => {
+    let d = "";
+    for (let s = 0; s <= MAX; s += 250) d += (s ? "L" : "M") + X(s).toFixed(1) + " " + Y(calc(s)[key]).toFixed(1);
+    return d;
+  };
+  $("pf-l-state").setAttribute("d", path("state"));
+  $("pf-l-itp").setAttribute("d", path("itp"));
+  const end = calc(MAX);
+  $("pf-end-state").setAttribute("x", X(MAX) + 8); $("pf-end-state").setAttribute("y", Y(end.state) + 4);
+  $("pf-end-itp").setAttribute("x", X(MAX) + 8); $("pf-end-itp").setAttribute("y", Y(end.itp) + 4);
+  const hit = $("pf-hit");
+  hit.setAttribute("x", L); hit.setAttribute("y", T - 40); hit.setAttribute("width", W - L - R); hit.setAttribute("height", H - B - T + 40);
+
+  // state → view
+  const range = $("pf-range"), chips = [...document.querySelectorAll(".pf-chips button")];
+  const BAR_MAX = calc(MAX).itp;
+  function render(s) {
+    const v = calc(s);
+    $("pf-salary").textContent = fmt(s);
+    range.value = s;
+    range.style.setProperty("--p", (s / MAX) * 100 + "%");
+    $("v-ink").textContent = fmt(v.ink);
+    $("v-pre").textContent = fmt(v.pre);
+    $("v-itp").textContent = fmt(v.itp);
+    $("b-ink").style.width = (v.ink / BAR_MAX) * 100 + "%";
+    $("b-pre").style.width = (v.pre / BAR_MAX) * 100 + "%";
+    $("b-itp").style.width = (v.itp / BAR_MAX) * 100 + "%";
+    const rate = $("itp-rate");
+    rate.textContent = s > CAP ? "4.5% + 30%" : "4.5%";
+    rate.classList.toggle("hot", s > CAP);
+    const tot = v.state + v.itp;
+    $("v-tot").textContent = fmt(tot);
+    $("v-pct").textContent = s ? ((tot / s) * 100).toFixed(1) : "0";
+    const cx = X(s);
+    const c = $("pf-cx");
+    c.setAttribute("x1", cx); c.setAttribute("x2", cx); c.setAttribute("y1", Y(0)); c.setAttribute("y2", Math.min(Y(v.state), Y(v.itp)) - 10);
+    $("pf-d-state").setAttribute("cx", cx); $("pf-d-state").setAttribute("cy", Y(v.state));
+    $("pf-d-itp").setAttribute("cx", cx); $("pf-d-itp").setAttribute("cy", Y(v.itp));
+    chips.forEach((b) => b.setAttribute("aria-pressed", String(+b.dataset.s === s)));
+    range.setAttribute("aria-valuetext", `${fmt(s)} kr，每月合计缴费 ${fmt(tot)} kr`);
+  }
+  range.addEventListener("input", () => render(+range.value));
+  chips.forEach((b) => b.addEventListener("click", () => render(+b.dataset.s)));
+
+  // drag on the chart sets the salary too
+  const svg = $("pf-svg");
+  let dragging = false;
+  const fromPointer = (e) => {
+    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const p = pt.matrixTransform(svg.getScreenCTM().inverse());
+    const s = Math.round(Math.min(MAX, Math.max(0, ((p.x - L) / (W - L - R)) * MAX)) / 500) * 500;
+    render(s);
+  };
+  svg.addEventListener("pointerdown", (e) => { dragging = true; svg.setPointerCapture(e.pointerId); fromPointer(e); });
+  svg.addEventListener("pointermove", (e) => { if (dragging) fromPointer(e); });
+  svg.addEventListener("pointerup", () => (dragging = false));
+  svg.addEventListener("pointercancel", () => (dragging = false));
+
+  render(45000);
+})();
+</script>
+
+<!-- ═════════ ALLMÄN ═════════ -->
+<section id="allman">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">01</div>
+      <h2>国家养老金<span class="sv">Allmän pension · Pensionsmyndigheten</span></h2>
+    </div>
+
+    <div class="split-wrap reveal">
+      <div>
+        <div class="huge">18.5<sup>%</sup></div>
+        <p class="muted" style="margin-top:14px">每年按<strong>应计养老金收入的 18.5%</strong> 缴费</p>
+        <div class="who">
+          <div><b>7%</b><span>雇员缴纳：从工资里扣，但有税收抵免，实际负担很小</span></div>
+          <div><b>10.21%</b><span>雇主缴纳：含在雇主社保费里</span></div>
+        </div>
+      </div>
+      <div>
+        <p>由 <strong>Pensionsmyndigheten</strong>（养老金管理局）负责。计算基数设有收入上限，约为 <strong>8.07 个收入基数</strong>（inkomstbasbelopp），折合月薪大约 5 万多瑞典克朗。超过上限的部分不再计入国家养老金。</p>
+        <div class="split-bar">
+          <div class="a">16% 收入养老金</div>
+          <div class="b">2.5%</div>
+        </div>
+        <div class="split-legend">
+          <span>Inkomstpension · 名义账户</span>
+          <span>Premiepension · 真实投资</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal">
+        <div class="pct">16%</div>
+        <h3>收入养老金<small>Inkomstpension</small></h3>
+        <ul class="dash">
+          <li>采用<strong>名义账户制 (NDC)</strong>：钱并没有存进你个人的账户，而是用来支付当期退休者的养老金，你的账户只是记账</li>
+          <li>账户余额按全国平均收入增长率进行"指数化"</li>
+          <li>有<strong>自动平衡机制</strong>（bromsen）：如果系统负债超过资产，养老金就会自动下调，以保证系统长期不破产</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <div class="pct blue">2.5%</div>
+        <h3>积累养老金<small>Premiepension</small></h3>
+        <ul class="dash">
+          <li>这部分是<strong>真实投资</strong>，可以自己在基金市场里选最多 5 只基金</li>
+          <li>不选就默认进入国家管理的 <strong>AP7 Såfa</strong>：以全球股票为主，56 岁以后逐步转向债券</li>
+          <li>平台在 2022 年后经过整顿，基金数量大幅减少</li>
+        </ul>
+      </div>
+      <div class="card reveal">
+        <div class="pct ink">基于居住年限</div>
+        <h3>保障养老金<small>Garantipension</small></h3>
+        <ul class="dash">
+          <li>给终生收入很低或没有收入的人的最低保障，依据是在瑞典的<strong>居住年限</strong>，跟缴费无关</li>
+          <li>拿全额需要在 16 岁之后于瑞典居住满 <strong>40 年</strong>（在欧盟/EES 居住的年份可部分合并计算），年数不足的按比例减少</li>
+          <li>领取年龄与目标年龄挂钩，目前为 67 岁</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note reveal">
+      另外还有<strong>住房补贴</strong>（Bostadstillägg）和<strong>老年生活保障</strong>（Äldreförsörjningsstöd），作为低收入老人的补充。
+    </div>
+
+    <h3 class="reveal" style="margin-top:80px">领取年龄<span class="tag">RIKTÅLDER</span></h3>
+    <div class="timeline reveal">
+      <div class="line"></div>
+      <div class="pts">
+        <div class="pt"><div class="age">55</div><div class="dot"></div><div class="lbl">部分职业养老金最早可领</div></div>
+        <div class="pt"><div class="age">56</div><div class="dot"></div><div class="lbl">AP7 Såfa 开始逐步转向债券</div></div>
+        <div class="pt key"><div class="age">≈64</div><div class="dot"></div><div class="lbl">最早领取国家养老金（目标年龄减 3）</div></div>
+        <div class="pt"><div class="age">66</div><div class="dot"></div><div class="lbl">开始享有更高的基本扣除额</div></div>
+        <div class="pt key"><div class="age">67</div><div class="dot"></div><div class="lbl">目标年龄 riktålder（2026 年起）· 保障养老金可领</div></div>
+        <div class="pt"><div class="age">69</div><div class="dot"></div><div class="lbl">LAS 规定的继续工作权利</div></div>
+      </div>
+    </div>
+    <p class="muted reveal">领取时间越晚，每月金额越高。也可以只领 <strong>25% / 50% / 75% / 100%</strong>，还能边工作边领。</p>
+  </div>
+</section>
+
+<!-- ═════════ TJÄNSTE ═════════ -->
+<section id="tjanste">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">02</div>
+      <h2>职业养老金<span class="sv">Tjänstepension · kollektivavtal</span></h2>
+    </div>
+    <p class="reveal" style="max-width:760px;margin-bottom:40px">
+      这一层由<strong>集体协议</strong>决定，大约 90% 的雇员都有，对中高收入人群尤其重要，因为国家养老金在收入上限以上的部分是<strong>不覆盖</strong>的。
+    </p>
+    <div class="reveal">
+      <table>
+        <thead><tr><th>协议</th><th>适用人群</th><th>大致缴费（雇主付）</th></tr></thead>
+        <tbody>
+          <tr><td>ITP1</td><td>私营企业白领（1979 年后出生）</td><td>月薪 7.5 收入基数以下部分 4.5%，以上部分 <span class="hl">30%</span></td></tr>
+          <tr><td>ITP2</td><td>私营白领（较早出生）</td><td>确定给付型 (DB)</td></tr>
+          <tr><td>SAF-LO</td><td>私营蓝领</td><td>约 4.5%，按协议逐步提高</td></tr>
+          <tr><td>AKAP-KR</td><td>市政 / 地区雇员</td><td>6%，高收入部分 <span class="hl">31.5%</span></td></tr>
+          <tr><td>PA16</td><td>国家公务员</td><td>混合型</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="two reveal" style="margin-top:48px">
+      <ul class="dash">
+        <li>很多协议允许自己选择投资方向（<em>traditionell försäkring</em> 传统保险，还是 <em>fondförsäkring</em> 基金保险），以及管理机构（例如 Alecta、AMF、Folksam、SEB 等）</li>
+        <li>有的协议最早 55 岁就能领，但政府正在推动把最低年龄提高到 62 岁左右，具体以你的协议和最新规定为准</li>
+      </ul>
+      <div class="note" style="margin-top:0">
+        ⚠ 如果雇主<strong>没有集体协议</strong>，就要确认对方是否另外提供了同等的职业养老金，这一点对外籍员工特别重要。
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ PRIVAT ═════════ -->
+<section id="privat">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">03</div>
+      <h2>私人储蓄<span class="sv">Privat sparande</span></h2>
+    </div>
+    <div class="cards reveal" style="margin-top:0">
+      <div class="card">
+        <div class="pct ink" style="color:var(--ink-soft);text-decoration:line-through">IPS</div>
+        <h3>个人养老储蓄<small>Individuellt pensionssparande</small></h3>
+        <p>2016 年起绝大多数人已<strong>不能抵税</strong>，现在很少有人用。</p>
+      </div>
+      <div class="card">
+        <div class="pct">ISK</div>
+        <h3>投资储蓄账户<small>Investeringssparkonto</small></h3>
+        <p>按账户价值每年交一笔<strong>标准税</strong>（schablonskatt），不对收益另外征税，是现在最常用的长期储蓄方式。</p>
+      </div>
+      <div class="card">
+        <div class="pct blue">KF</div>
+        <h3>资本保险<small>Kapitalförsäkring</small></h3>
+        <p>和 ISK 一样，按账户价值每年交一笔标准税，不对收益另外征税。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ SKATT ═════════ -->
+<section id="skatt">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">04</div>
+      <h2>税务<span class="sv">Skatt på pension</span></h2>
+    </div>
+    <div class="tax-grid reveal">
+      <div>
+        <div class="k">Inkomstskatt</div>
+        <h3>按工资收入征税</h3>
+        <p>养老金和工资一样征税：市政税，收入高的话还要交国家税。</p>
+      </div>
+      <div>
+        <div class="k">Förhöjt grundavdrag</div>
+        <h3 style="color:var(--paper)">66 岁以上有税收优惠</h3>
+        <p style="opacity:.8">年满 66 岁（与目标年龄挂钩）后享有更高的基本扣除额，65 岁以上继续工作还有额外的工作税收抵免。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ TOOLS ═════════ -->
+<section id="tools">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">05</div>
+      <h2>实用工具<span class="sv">Verktyg</span></h2>
+    </div>
+    <div class="tools reveal">
+      <div class="tool">
+        <div class="ic">✉</div>
+        <h3>Orange kuvertet</h3>
+        <p>橙色信封，每年寄来的国家养老金对账单。</p>
+      </div>
+      <div class="tool">
+        <div class="ic">Σ</div>
+        <h3><a href="https://www.minpension.se" target="_blank" rel="noopener">minpension.se</a></h3>
+        <p>在一个地方汇总查看国家、职业和私人三层养老金，还能做退休预测。用 BankID 登录。</p>
+      </div>
+      <div class="tool">
+        <div class="ic">↻</div>
+        <h3><a href="https://www.pensionsmyndigheten.se" target="_blank" rel="noopener">pensionsmyndigheten.se</a></h3>
+        <p>可以更换 premiepension 基金、申请领取养老金。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ EXPAT ═════════ -->
+<section id="expat" class="expat">
+  <div class="flag" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">06</div>
+      <h2>对外籍居民特别相关的几点<span class="sv">För dig som flyttar</span></h2>
+    </div>
+    <div class="expat-list">
+      <div class="ex reveal">
+        <div class="mark ok">✓</div>
+        <div><h3>养老金可以带走</h3><p>收入养老金、积累养老金和职业养老金在离开瑞典后照样可以领取，在海外也能发放。</p></div>
+      </div>
+      <div class="ex reveal">
+        <div class="mark no">✕</div>
+        <div><h3>保障养老金和住房补贴通常不能带走</h3><p>一般要求居住在瑞典，欧盟/EES 内有部分例外。</p></div>
+      </div>
+      <div class="ex reveal">
+        <div class="mark ok">⇄</div>
+        <div><h3>欧盟社保协调</h3><p>在不同欧盟国家的工作年限可以合并计算资格，但每个国家各自支付自己那一部分。</p></div>
+      </div>
+      <div class="ex reveal">
+        <div class="mark no">≠</div>
+        <div><h3>瑞典与中国没有全面的社保协定</h3><p>两国的缴费年限不能合并，需要分别看各自国家的规则。</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>本页为概览性介绍，具体数字（收入基数、年龄、缴费率）每年会调整，请以 Pensionsmyndigheten 和你所在的集体协议为准。</span>
+    <span class="mono">se-pension · 2026</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
