@@ -559,6 +559,7 @@
   <div class="wrap">
     <a href="#overview"><b>00</b>三层结构</a>
     <a href="#figure"><b>图</b>互动图解</a>
+    <a href="#forecast"><b>算</b>退休预测</a>
     <a href="#allman"><b>01</b>国家养老金</a>
     <a href="#tjanste"><b>02</b>职业养老金</a>
     <a href="#privat"><b>03</b>私人储蓄</a>
@@ -907,6 +908,381 @@
   svg.addEventListener("pointercancel", () => (dragging = false));
 
   render(45000);
+})();
+</script>
+
+<!-- ═════════ FORECAST ═════════ -->
+<section id="forecast">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-no">算</div>
+      <h2>退休时能领多少<span class="sv">Pensionsprognos</span></h2>
+    </div>
+    <p class="reveal muted" style="max-width:760px;margin-bottom:40px">
+      填入年龄、月薪和打算退休的年龄，估算退休后每个月能领到的<strong>税前</strong>养老金。
+      所有金额都按<strong>今天的币值</strong>显示，已经扣除了通胀，可以直接和你现在的工资比较。
+    </p>
+
+    <div class="fc" id="fc">
+      <!-- left: inputs -->
+      <form class="fc-in" id="fc-form" onsubmit="return false">
+        <div class="fc-gh">工作</div>
+        <div class="fc-f" data-k="age"    data-min="20" data-max="63"     data-step="1"    data-v="32">
+          <label for="fc-age">现在的年龄</label><output></output><i>岁</i></div>
+        <div class="fc-f" data-k="past"   data-min="0"  data-max="40"     data-step="1"    data-v="5">
+          <label for="fc-past">已在瑞典工作</label><output></output><i>年</i></div>
+        <div class="fc-f" data-k="sal"    data-min="0"  data-max="100000" data-step="500"  data-v="45000">
+          <label for="fc-sal">月薪（税前）</label><output></output><i>kr</i></div>
+        <div class="fc-f" data-k="stop"   data-min="55" data-max="70"     data-step="1"    data-v="65">
+          <label for="fc-stop">停止工作年龄</label><output></output><i>岁</i></div>
+
+        <div class="fc-gh">领取</div>
+        <div class="fc-f" data-k="ret"    data-min="64" data-max="70"     data-step="1"    data-v="67">
+          <label for="fc-ret">国家养老金开始领取</label><output></output><i>岁</i></div>
+        <div class="fc-f" data-k="itpa"   data-min="55" data-max="70"     data-step="1"    data-v="65">
+          <label for="fc-itpa">ITP1 开始领取</label><output></output><i>岁</i></div>
+        <div class="fc-seg" role="group" aria-label="ITP1 领取方式">
+          <span>ITP1 领取方式</span>
+          <button type="button" data-itp="life" aria-pressed="true">终身</button>
+          <button type="button" data-itp="5" aria-pressed="false">5 年</button>
+        </div>
+
+        <div class="fc-gh">假设</div>
+        <div class="fc-f" data-k="g"      data-min="0"  data-max="3"      data-step="0.1"  data-v="1.5">
+          <label for="fc-g">工资年增长（扣通胀）</label><output></output><i>%</i></div>
+        <div class="fc-f" data-k="r"      data-min="0"  data-max="6"      data-step="0.1"  data-v="3">
+          <label for="fc-r">投资年回报（扣通胀和费用）</label><output></output><i>%</i></div>
+
+
+        <details class="fc-bal">
+          <summary>已经有橙色信封？填入现有余额会更准</summary>
+          <p>在 minpension.se 或橙色信封上可以查到。留空则按“已在瑞典工作年数”估算。</p>
+          <label>收入养老金余额<input type="number" min="0" step="1000" inputmode="numeric" id="fc-b-ink" placeholder="估算"></label>
+          <label>积累养老金余额<input type="number" min="0" step="1000" inputmode="numeric" id="fc-b-pre" placeholder="估算"></label>
+          <label>ITP1 余额<input type="number" min="0" step="1000" inputmode="numeric" id="fc-b-itp" placeholder="估算"></label>
+        </details>
+      </form>
+
+      <!-- right: the statement -->
+      <div class="fc-out">
+        <div class="fc-band">
+          <span>Din pensionsprognos</span>
+          <span id="fc-when"></span>
+        </div>
+        <div class="fc-body">
+          <div class="fc-big" aria-live="polite">
+            <b id="fc-tot">0</b><em id="fc-big-l">kr / 月 · 税前 · 终身每月收入</em>
+          </div>
+          <div class="fc-stack" id="fc-stack" aria-hidden="true">
+            <i class="c-ink"></i><i class="c-pre"></i><i class="c-itp"></i><i class="c-gar"></i>
+          </div>
+          <ul class="fc-rows">
+            <li class="c-ink"><span><i></i>收入养老金<small id="fc-ink-l">Inkomstpension</small></span><b id="fc-ink">0</b></li>
+            <li class="c-pre"><span><i></i>积累养老金<small id="fc-pre-l">Premiepension</small></span><b id="fc-pre">0</b></li>
+            <li class="c-itp"><span><i></i>职业养老金<small id="fc-itp-l">ITP1 · 终身</small></span><b id="fc-itp">0</b></li>
+            <li class="c-gar"><span><i></i>保障养老金<small id="fc-gar-l">Garantipension · 67 岁起</small></span><b id="fc-gar">0</b></li>
+          </ul>
+
+          <div class="fc-rr">
+            <div class="fc-rr-head"><span>替代率：养老金 ÷ 停止工作前月薪</span><b id="fc-rr">0%</b></div>
+            <div class="fc-rr-bars">
+              <div><span>停工前月薪</span><div class="t"><div class="f f-sal" id="fc-rr-sal"></div></div><em id="fc-fsal">0</em></div>
+              <div><span>养老金</span><div class="t"><div class="f f-pen" id="fc-rr-pen"></div></div><em id="fc-fpen">0</em></div>
+            </div>
+          </div>
+
+          <div class="fc-tl">
+            <div class="fc-tl-head"><span>每年的月收入</span><small id="fc-gap"></small></div>
+            <div class="fc-tl-cols" id="fc-tl" role="img" aria-label="55 到 85 岁每年的每月养老金收入"></div>
+            <div class="fc-tl-axis" id="fc-tl-axis" aria-hidden="true"></div>
+            <div class="fc-tl-key">
+              <span><i class="k-work"></i>在职</span><span><i class="k-gap"></i>没有养老金，靠储蓄过渡</span>
+              <span><i class="c-ink"></i>收入</span><span><i class="c-pre"></i>积累</span><span><i class="c-itp"></i>ITP1</span><span><i class="c-gar"></i>保障</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <p class="pf-note">
+      估算方法：工作期间每年按上一节的规则缴费（18.5% 国家养老金，上限 7.5 个收入基数；ITP1 4.5% / 30%），收入基数随工资同步增长。
+      停工后不再缴费，但余额继续增值：收入养老金按工资增长率，积累养老金和 ITP1 按投资回报；领取时用除数（delningstal）把余额换算成每月金额：1960 年出生者 65 岁领取约为 16.4，每晚领一年约减 0.6，出生每晚 10 年约加 0.6（寿命更长）。
+      保障养老金按 2026 年单身全额 12 069 kr/月计，与国家养老金逐额抵扣，并按在瑞典的年数（满 40 年为全额，假设停工后仍住在瑞典）折算；领保障养老金必须先全额领取收入养老金，所以从 67 岁和国家养老金开始领取年龄中较晚的那个开始。
+      未计入：收入养老金补贴、自动平衡机制（bromsen）、目标年龄将来可能继续提高，以及税。ITP1 以外的集体协议规则不同。
+      这只是粗略估算，请以 <a href="https://www.minpension.se" target="_blank" rel="noopener">minpension.se</a> 的个人预测为准。
+    </p>
+  </div>
+</section>
+
+<style>
+  .fc {
+    display: grid;
+    grid-template-columns: minmax(300px, .85fr) 1.15fr;
+    border: 1.5px solid var(--ink);
+    background: #fbf8f2;
+    box-shadow: 8px 8px 0 var(--orange);
+  }
+  .fc-in { padding: 30px 32px 28px; border-right: 1.5px solid var(--ink); display: grid; gap: 18px; align-content: start; background: var(--paper-2); }
+  .fc-f { display: grid; grid-template-columns: 1fr auto auto; align-items: baseline; column-gap: 6px; }
+  .fc-f label { font-size: 13.5px; color: var(--ink-soft); }
+  .fc-f output { font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 22px; font-variant-numeric: tabular-nums; line-height: 1.2; }
+  .fc-f > i { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-soft); width: 18px; }
+  .fc-f .pf-range { grid-column: 1 / -1; }
+
+  .fc-seg { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink-soft); }
+  .fc-seg span { margin-right: auto; }
+  .fc-seg button {
+    font: 500 13px var(--sans); padding: 5px 14px; cursor: pointer;
+    background: transparent; color: var(--ink); border: 1.5px solid var(--rule);
+  }
+  .fc-seg button:hover { border-color: var(--ink); }
+  .fc-seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+  .fc-bal { border-top: 1px dashed var(--rule); padding-top: 14px; font-size: 13px; }
+  .fc-bal summary { cursor: pointer; color: var(--orange-deep); font-weight: 500; list-style: none; }
+  .fc-bal summary::-webkit-details-marker { display: none; }
+  .fc-bal summary::before { content: "+ "; font-family: var(--mono); }
+  .fc-bal[open] summary::before { content: "− "; }
+  .fc-bal p { color: var(--ink-soft); font-size: 12px; margin: 8px 0 10px; line-height: 1.6; }
+  .fc-bal label { display: grid; grid-template-columns: 1fr 140px; align-items: center; gap: 10px; margin-top: 8px; color: var(--ink-soft); }
+  .fc-bal input {
+    font: 600 14px var(--mono); padding: 6px 10px; width: 100%; text-align: right;
+    background: #fbf8f2; color: var(--ink); border: 1.5px solid var(--rule);
+  }
+  .fc-bal input:focus { outline: none; border-color: var(--orange); }
+
+  .fc-out { display: flex; flex-direction: column; min-width: 0; }
+  .fc-band {
+    display: flex; justify-content: space-between; gap: 12px; white-space: nowrap; padding: 12px 28px;
+    background: var(--orange); color: #fff; border-bottom: 1.5px solid var(--ink);
+    font-family: var(--mono); font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase;
+  }
+  .fc-body { padding: 26px 28px 28px; display: grid; gap: 26px; }
+  .fc-big { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+  .fc-big b {
+    font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 76px; line-height: .95;
+    letter-spacing: -.03em; font-variant-numeric: tabular-nums;
+  }
+  .fc-big em { font-style: normal; font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+
+  .fc-stack { display: flex; height: 22px; border: 1.5px solid var(--ink); background: rgba(19,34,58,.05); }
+  .fc-stack i { display: block; height: 100%; width: 0; transition: width .5s cubic-bezier(.2,.7,.2,1); }
+  .fc-stack i + i { box-shadow: inset 1.5px 0 0 #fbf8f2; }
+  .c-ink i, i.c-ink { background: var(--orange); }
+  .c-pre i, i.c-pre { background: var(--blue); }
+  .c-itp i, i.c-itp { background: var(--ink); }
+  .c-gar i, i.c-gar { background: var(--yellow); }
+
+  .fc-rows { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 12px 26px; margin-top: -8px; }
+  .fc-rows li { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--rule); padding-bottom: 6px; font-size: 14px; }
+  .fc-rows li i { display: inline-block; width: 10px; height: 10px; margin-right: 8px; }
+  .fc-rows small { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--ink-soft); margin-left: 18px; line-height: 1.4; }
+  .fc-rows b { font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 20px; font-variant-numeric: tabular-nums; }
+  .fc-rows li.zero { opacity: .4; }
+
+  .fc-rr-head { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; color: var(--ink-soft); margin-bottom: 10px; }
+  .fc-rr-head b { font-family: "Noto Serif SC", serif; font-weight: 900; font-size: 26px; color: var(--orange-deep); font-variant-numeric: tabular-nums; }
+  .fc-rr-bars { display: grid; gap: 8px; }
+  .fc-rr-bars > div { display: grid; grid-template-columns: 76px 1fr 72px; align-items: center; gap: 10px; font-size: 12.5px; }
+  .fc-rr-bars em { font-style: normal; font-family: var(--mono); font-size: 12px; text-align: right; font-variant-numeric: tabular-nums; }
+  .fc-rr-bars .t { height: 12px; background: rgba(19,34,58,.06); }
+  .fc-rr-bars .f { height: 100%; width: 0; transition: width .5s cubic-bezier(.2,.7,.2,1); }
+  .f-sal { background: repeating-linear-gradient(135deg, var(--ink) 0 2px, transparent 2px 6px); border: 1px solid var(--ink); }
+  .f-pen { background: var(--orange); }
+
+  .fc-gh { font-family: var(--mono); font-size: 10.5px; letter-spacing: .18em; color: var(--orange-deep); border-bottom: 1px solid var(--rule); padding-bottom: 4px; margin: 6px 0 -4px; }
+  .fc-gh:first-child { margin-top: 0; }
+
+  .fc-tl-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 12px; font-size: 13.5px; color: var(--ink-soft); margin-bottom: 10px; }
+  .fc-tl-head small { font-size: 12.5px; color: var(--ink); }
+  .fc-tl-head small b { color: #c0392b; font-weight: 600; }
+  .fc-tl-cols { display: grid; grid-template-columns: repeat(31, minmax(0, 1fr)); gap: 2px; height: 120px; align-items: end; border-bottom: 1.5px solid var(--ink); }
+  .fc-tl-cols > div { display: flex; flex-direction: column-reverse; height: 100%; justify-content: flex-start; }
+  .fc-tl-cols > div > i { display: block; transition: height .45s cubic-bezier(.2,.7,.2,1); }
+  .fc-tl-cols > div > i + i { box-shadow: inset 0 -1px 0 #fbf8f2; }
+  .fc-tl-cols .work { background: repeating-linear-gradient(135deg, rgba(19,34,58,.35) 0 1.5px, transparent 1.5px 5px); }
+  .fc-tl-cols .gap { background: repeating-linear-gradient(135deg, #c0392b 0 1.5px, transparent 1.5px 4px); }
+  .fc-tl-axis { display: grid; grid-template-columns: repeat(31, minmax(0, 1fr)); gap: 2px; font-family: var(--mono); font-size: 10px; color: var(--ink-soft); margin-top: 4px; }
+  .fc-tl-axis span { text-align: center; white-space: nowrap; overflow: visible; display: flex; justify-content: center; }
+  .fc-tl-axis span.on { color: var(--orange-deep); font-weight: 600; }
+  .fc-tl-key { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 11.5px; color: var(--ink-soft); margin-top: 10px; }
+  .fc-tl-key i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
+  .fc-tl-key .k-work { background: repeating-linear-gradient(135deg, rgba(19,34,58,.5) 0 1.5px, transparent 1.5px 4px); border: 1px solid rgba(19,34,58,.3); }
+  .fc-tl-key .k-gap { background: repeating-linear-gradient(135deg, #c0392b 0 1.5px, transparent 1.5px 4px); border: 1px solid #c0392b; }
+
+  @media (max-width: 900px) {
+    .fc { grid-template-columns: 1fr; box-shadow: 5px 5px 0 var(--orange); }
+    .fc-in { border-right: none; border-bottom: 1.5px solid var(--ink); padding: 24px 22px; }
+    .fc-band { padding: 10px 22px; letter-spacing: .06em; font-size: 10.5px; }
+    .fc-band span:first-child { display: none; }
+    .fc-body { padding: 22px; }
+    .fc-big b { font-size: 58px; }
+    .fc-rows { grid-template-columns: 1fr; }
+    .fc-bal label { grid-template-columns: 1fr 120px; }
+  }
+</style>
+
+<script>
+(() => {
+  // 2026 constants
+  const IBB = 83400, CAP = IBB * 7.5 / 12, FEE = 0.07;
+  const G_FULL = 12069, G_FREE = 1.26 * 59200 / 12; // single, full garantipension; reduced krona-for-krona up to 1.26 PBB, then 48%
+  // approximate delningstal: ~16.4 at 65 for people born 1960, −0.6 per later year, rising with later birth years (longer lives)
+  const D = (a, born) => 16.4 - 0.6 * (a - 65) + 0.06 * Math.max(0, born - 1960);
+  const fmt = (n) => Math.round(n).toLocaleString("sv-SE").replace(/\s/g, " ");
+  const $ = (id) => document.getElementById(id);
+
+  // build the sliders from their data attributes
+  const P = { itp: "life" };
+  const fields = {};
+  document.querySelectorAll("#fc .fc-f").forEach((f) => {
+    const k = f.dataset.k, inp = document.createElement("input");
+    Object.assign(inp, { type: "range", id: "fc-" + k, className: "pf-range", min: f.dataset.min, max: f.dataset.max, step: f.dataset.step, value: f.dataset.v });
+    f.appendChild(inp);
+    fields[k] = { inp, out: f.querySelector("output") };
+    inp.addEventListener("input", update);
+  });
+
+  const bal = (id) => { const v = $(id).value; return v === "" ? null : Math.max(0, +v); };
+
+  const LO = 55, HI = 85, G_AGE = 67;
+
+  // one pass, year by year: contributions while working, every balance keeps growing, snapshot at the start of each age
+  function project(p) {
+    const snap = {};
+    let ink = 0, pre = 0, itp = 0;
+    for (let y = p.age - p.past; y < HI; y++) {
+      if (y === p.age) {
+        if (p.bInk != null) ink = p.bInk;
+        if (p.bPre != null) pre = p.bPre;
+        if (p.bItp != null) itp = p.bItp;
+      }
+      snap[y] = { ink, pre, itp };
+      const t = y - p.age, s = p.sal * (1 + p.g) ** t, cap = CAP * (1 + p.g) ** t;
+      const work = y < p.stop;
+      const pgi = work ? Math.min(s * (1 - FEE), cap) * 12 : 0;
+      ink = ink * (1 + p.g) + 0.16 * pgi;
+      pre = pre * (1 + p.r) + 0.025 * pgi;
+      itp = itp * (1 + p.r) + (work ? 12 * (0.045 * Math.min(s, cap) + 0.30 * Math.max(0, s - cap)) : 0);
+    }
+    const born = 2026 - p.age, at = (a) => snap[Math.max(a, p.age)];
+    const m = {
+      ink: at(p.ret).ink / D(p.ret, born) / 12,
+      pre: at(p.ret).pre / D(p.ret, born) / 12,
+    };
+    const bi = at(p.itpa).itp;
+    m.itp = p.itp === "5"
+      ? (p.r ? bi * p.r / (1 - (1 + p.r) ** -5) : bi / 5) / 12
+      : bi / D(p.itpa, born) / 12;
+    // garantipension needs the whole income pension taken, so it starts at max(67, ret)
+    m.garAt = Math.max(G_AGE, p.ret);
+    const f = Math.min(40, p.past + Math.max(0, m.garAt - p.age)) / 40, base = m.ink + m.pre;
+    m.gar = Math.max(0, G_FULL * f - Math.min(base, G_FREE * f) - 0.48 * Math.max(0, base - G_FREE * f));
+    m.life = p.itp !== "5";
+    m.tot = m.ink + m.pre + (m.life ? m.itp : 0) + m.gar;
+    m.fsal = p.sal * (1 + p.g) ** Math.max(0, p.stop - p.age - 1);
+    m.year = (a) => ({
+      ink: a >= p.ret ? m.ink : 0,
+      pre: a >= p.ret ? m.pre : 0,
+      itp: a >= p.itpa && (p.itp !== "5" || a < p.itpa + 5) ? m.itp : 0,
+      gar: a >= m.garAt ? m.gar : 0,
+    });
+    return m;
+  }
+
+  // timeline columns, built once
+  const tl = $("fc-tl"), axis = $("fc-tl-axis"), KEYS = ["ink", "pre", "itp", "gar"];
+  const tcols = [], ticks = [];
+  for (let a = LO; a <= HI; a++) {
+    const c = document.createElement("div");
+    const parts = { col: c };
+    for (const k of ["work", "gap", ...KEYS]) {
+      const i = document.createElement("i");
+      i.className = k === "work" || k === "gap" ? k : "c-" + k;
+      c.appendChild(i);
+      parts[k] = i;
+    }
+    tl.appendChild(c);
+    tcols.push(parts);
+    ticks.push(axis.appendChild(document.createElement("span")));
+  }
+
+  document.querySelectorAll("#fc .fc-seg button").forEach((b) => b.addEventListener("click", () => {
+    P.itp = b.dataset.itp;
+    document.querySelectorAll("#fc .fc-seg button").forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+    update();
+  }));
+  ["fc-b-ink", "fc-b-pre", "fc-b-itp"].forEach((id) => $(id).addEventListener("input", update));
+
+  function update() {
+    const v = (k) => +fields[k].inp.value;
+    // you can't have worked longer than since 18, or stop working in the past
+    const pastMax = Math.min(40, Math.max(0, v("age") - 18));
+    fields.past.inp.max = pastMax;
+    if (v("past") > pastMax) fields.past.inp.value = pastMax;
+    const stopMin = Math.max(55, v("age"));
+    fields.stop.inp.min = stopMin;
+    if (v("stop") < stopMin) fields.stop.inp.value = stopMin;
+
+    const p = {
+      age: v("age"), past: v("past"), sal: v("sal"), stop: v("stop"), ret: v("ret"), itpa: v("itpa"),
+      g: v("g") / 100, r: v("r") / 100, itp: P.itp,
+      bInk: bal("fc-b-ink"), bPre: bal("fc-b-pre"), bItp: bal("fc-b-itp"),
+    };
+    for (const k in fields) {
+      const { inp, out } = fields[k];
+      out.textContent = k === "sal" ? fmt(+inp.value) : (k === "g" || k === "r") ? (+inp.value).toFixed(1) : inp.value;
+      inp.style.setProperty("--p", ((inp.value - inp.min) / (inp.max - inp.min || 1)) * 100 + "%");
+    }
+
+    const m = project(p);
+    const allAt = Math.max(p.ret, m.life ? p.itpa : 0, m.gar ? m.garAt : 0);
+    $("fc-tot").textContent = fmt(m.tot);
+    $("fc-when").textContent = allAt + " 岁起全部到位 · 今天的币值";
+    KEYS.forEach((k, i) => {
+      $("fc-" + k).textContent = fmt(m[k]);
+      $("fc-" + k).closest("li").classList.toggle("zero", Math.round(m[k]) === 0);
+      const w = k === "itp" && !m.life ? 0 : m[k];
+      $("fc-stack").children[i].style.width = m.tot ? (w / m.tot) * 100 + "%" : "0";
+    });
+    $("fc-ink-l").textContent = `Inkomstpension · ${p.ret} 岁起`;
+    $("fc-pre-l").textContent = `Premiepension · ${p.ret} 岁起`;
+    $("fc-itp-l").textContent = P.itp === "5" ? `ITP1 · ${p.itpa}–${p.itpa + 4} 岁 · 不计入合计` : `ITP1 · 终身 · ${p.itpa} 岁起`;
+    $("fc-gar-l").textContent = `Garantipension · ${m.garAt} 岁起`;
+    $("fc-big-l").textContent = "kr / 月 · 税前 · 终身每月收入";
+
+    const rr = m.fsal ? m.tot / m.fsal : 0;
+    $("fc-rr").textContent = m.fsal ? Math.round(rr * 100) + "%" : "—";
+    const top = Math.max(m.fsal, m.tot) || 1;
+    $("fc-rr-sal").style.width = (m.fsal / top) * 100 + "%";
+    $("fc-rr-pen").style.width = (m.tot / top) * 100 + "%";
+    $("fc-fsal").textContent = fmt(m.fsal);
+    $("fc-fpen").textContent = fmt(m.tot);
+
+    // timeline: working years hatched grey, years with no pension hatched red, then the stacked income
+    const years = [];
+    for (let a = LO; a <= HI; a++) years.push(m.year(a));
+    const sumOf = (y) => y.ink + y.pre + y.itp + y.gar;
+    const peak = Math.max(1, ...years.map(sumOf)), H = 112;
+    let gap = 0, itpOnly = 0;
+    years.forEach((y, i) => {
+      const a = LO + i, c = tcols[i], sum = sumOf(y);
+      const working = a < p.stop, isGap = !working && sum < 1;
+      if (isGap) gap++;
+      if (!working && y.itp > 0 && sum === y.itp) itpOnly++;
+      c.work.style.height = working && a >= p.age ? "24px" : "0";
+      c.gap.style.height = isGap ? "10px" : "0";
+      KEYS.forEach((k) => (c[k].style.height = (y[k] / peak) * H + "px"));
+      c.col.title = `${a} 岁：` + (working ? "在职" : isGap ? "没有养老金收入" : `每月约 ${fmt(sum)} kr`);
+      ticks[i].classList.toggle("on", a === p.stop);
+      ticks[i].textContent = a === p.stop || (a % 5 === 0 && Math.abs(a - p.stop) > 1) ? a : "";
+    });
+    $("fc-gap").innerHTML = gap
+      ? `${p.stop} 岁停工后有 <b>${gap} 年</b>没有养老金收入，需要靠储蓄过渡`
+      : itpOnly ? `${p.stop} 岁停工后先只靠 ITP1 过渡 ${itpOnly} 年` : "停工后马上有国家养老金收入";
+    tl.setAttribute("aria-label", `55 到 85 岁每年的每月养老金收入，最高约 ${fmt(peak)} kr。` + $("fc-gap").textContent);
+  }
+  update();
 })();
 </script>
 
